@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Style Finder — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="auth-body">
+  <div class="auth-shell">
+
+    <!-- LEFT BANNER -->
+    <aside class="auth-banner">
+      <div class="brand auth-brand">
+        <span class="brand-icon">👗</span>
+        <span class="brand-text">SMART STYLE<br><b>FINDER</b></span>
+      </div>
+      <h1 class="auth-banner-title">Find Your Style,<br><span class="accent">Instantly</span></h1>
+      <div class="accent-rule"></div>
+      <p class="auth-banner-sub">Smart Style Finder uses AI to help you discover fashion products similar to what you love — through images or words.</p>
+      <ul class="auth-features">
+        <li><span class="feat-icon">🖼️</span> Image &amp; Text Search</li>
+        <li><span class="feat-icon">✨</span> AI-Powered Matching</li>
+        <li><span class="feat-icon">🏷️</span> Top Fashion Picks</li>
+      </ul>
+    </aside>
+
+    <!-- RIGHT PANEL — both forms side by side -->
+    <section class="auth-panel">
+      <div class="auth-header">
+        <h2 class="auth-welcome">Welcome Back!</h2>
+        <p class="auth-welcome-sub">Login to continue to Smart Style Finder</p>
+      </div>
+
+      <div class="auth-cols">
+
+        <!-- LOGIN COLUMN -->
+        <div class="auth-col">
+          <div class="auth-col-label active">Login</div>
+          <div class="auth-col-sep"></div>
+          <form id="login-form" novalidate>
+            <div class="field">
+              <span class="field-icon">✉️</span>
+              <input type="email" name="email" placeholder="Email address" />
+            </div>
+            <div class="field">
+              <span class="field-icon">🔒</span>
+              <input type="password" name="password" placeholder="Password" />
+              <span class="toggle-eye" data-target="password">👁️</span>
+            </div>
+            <div class="form-row">
+              <label class="check"><input type="checkbox" name="remember" /> Remember me</label>
+              <a href="#" id="forgot-link" class="link">Forgot Password?</a>
+            </div>
+            <div class="form-error" id="login-error"></div>
+            <button type="submit" class="btn-primary full">Login</button>
+          </form>
+        </div>
+
+        <!-- REGISTER COLUMN -->
+        <div class="auth-col">
+          <div class="auth-col-label">Register</div>
+          <div class="auth-col-sep"></div>
+          <p class="create-head">Create Your Account</p>
+          <p class="create-sub">Join Smart Style Finder today</p>
+          <form id="register-form" novalidate>
+            <div class="field"><span class="field-icon">👤</span>
+              <input type="text" name="full_name" placeholder="Full Name" /></div>
+            <div class="field"><span class="field-icon">✉️</span>
+              <input type="email" name="email" placeholder="Email address" /></div>
+            <div class="field"><span class="field-icon">🔒</span>
+              <input type="password" name="password" placeholder="Password" id="reg-pass" />
+              <span class="toggle-eye" data-target="reg-pass">👁️</span></div>
+            <ul class="pw-rules" id="pw-rules">
+              <li data-rule="len">8+ characters</li>
+              <li data-rule="upper">Uppercase</li>
+              <li data-rule="lower">Lowercase</li>
+              <li data-rule="num">Number</li>
+              <li data-rule="special">Special character</li>
+            </ul>
+            <div class="field"><span class="field-icon">🔒</span>
+              <input type="password" name="confirm" placeholder="Confirm Password" id="reg-confirm" />
+              <span class="toggle-eye" data-target="reg-confirm">👁️</span></div>
+            <label class="check terms-check">
+              <input type="checkbox" name="terms" />
+              I agree to the <a href="#" id="terms-link" class="link">Terms &amp; Conditions</a>
+            </label>
+            <div class="form-error" id="register-error"></div>
+            <button type="submit" class="btn-primary full">Register</button>
+          </form>
+        </div>
+
+      </div><!-- /auth-cols -->
+
+      <div class="secure-note">
+        <span class="secure-icon">🛡️</span>
+        <div><strong>Your data is safe and secure</strong>
+        <p>We use industry-standard security to protect your personal information.</p></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Forgot password modal -->
+  <div class="modal" id="forgot-modal" hidden>
+    <div class="modal-card">
+      <button class="modal-close" data-close>×</button>
+      <h3>Reset Password</h3>
+      <p class="muted">Enter your email and a new password.</p>
+      <div class="field"><span class="field-icon">✉️</span><input type="email" id="fp-email" placeholder="Email address" /></div>
+      <div class="field"><span class="field-icon">🔒</span><input type="password" id="fp-pass" placeholder="New password" /></div>
+      <div class="form-error" id="forgot-error"></div>
+      <button class="btn-primary full" id="forgot-submit">Reset Password</button>
+    </div>
+  </div>
+
+  <!-- Terms modal -->
+  <div class="modal" id="terms-modal" hidden>
+    <div class="modal-card wide">
+      <button class="modal-close" data-close>×</button>
+      <h3>Terms &amp; Conditions</h3>
+      <div class="terms-body">
+        <p><strong>1. Acceptance.</strong> By creating an account you agree to use Smart Style Finder for personal, lawful fashion-discovery purposes only.</p>
+        <p><strong>2. Account.</strong> You are responsible for keeping your login credentials confidential and for all activity under your account.</p>
+        <p><strong>3. Use of Service.</strong> The AI search provides similarity-based suggestions from a sample catalogue; results are recommendations, not guarantees of availability or price.</p>
+        <p><strong>4. Uploads.</strong> Images you upload are used only to perform your search and are not shared with third parties.</p>
+        <p><strong>5. Bookings &amp; Feedback.</strong> Bookings made in this demo are for illustrative purposes. Feedback you submit may be displayed publicly on product pages.</p>
+        <p><strong>6. Privacy.</strong> We store your name and email to manage your account and apply industry-standard protections to your data.</p>
+        <p><strong>7. Changes.</strong> These terms may be updated; continued use constitutes acceptance of the latest version.</p>
+      </div>
+      <button class="btn-primary full" data-close>I Understand</button>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+</body>
+</html>

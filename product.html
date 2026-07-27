@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}{{ product.title }} · Smart Style Finder{% endblock %}
+{% block nav_search %}active{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('home') }}">🏠</a> › <a href="{{ url_for('search_text_page') }}">Search</a> › <span>Results</span> › <span>Product Details</span></div>
+
+<div class="product-top" data-pid="{{ product.product_id }}"
+     data-title="{{ product.title }}" data-brand="{{ product.brand }}" data-price="{{ product.price }}">
+  <div class="product-image">
+    <img src="{{ product.img_url }}" alt="{{ product.title }}" />
+  </div>
+  <div class="product-info">
+    {% if product.score %}<span class="match-badge">🏆 Match Score: {{ product.score }}%</span>{% endif %}
+    <h1>{{ product.title }}</h1>
+    <p class="by-brand">by {{ product.brand }}</p>
+    <p class="product-price">{{ product.price }}</p>
+    <table class="product-attrs">
+      <tr><td>📋 Product ID</td><td>{{ product.product_id }}</td></tr>
+      <tr><td>🧵 Fabric</td><td>{{ product.fabric }}</td></tr>
+      <tr><td>🎨 Color</td><td class="cap">{{ product.colour }}</td></tr>
+      <tr><td>🏷️ Brand</td><td>{{ product.brand }}</td></tr>
+      <tr><td>👗 Style</td><td class="cap">{{ product.design }}</td></tr>
+    </table>
+    <div class="product-actions">
+      <button class="btn-primary" id="book-btn">📅 Book This Dress</button>
+      <button class="btn-outline" id="feedback-btn">💬 Give Feedback</button>
+    </div>
+    <div class="why-book">
+      <p class="why-title">🛡️ Why book from Smart Style Finder?</p>
+      <div class="why-grid">
+        <div><strong>📅 Easy Booking</strong><span>Book in just a few clicks</span></div>
+        <div><strong>🛡️ Secure &amp; Reliable</strong><span>Your booking is safe with us</span></div>
+        <div><strong>⏱️ Quick Confirmation</strong><span>Get confirmation instantly</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="product-bottom">
+  <div class="similar-block">
+    <h3 class="block-title">Similar Products</h3>
+    <div class="similar-grid">
+      {% for s in similar %}
+      <a class="similar-card" href="{{ url_for('product_page', pid=s.product_id) }}">
+        <div class="similar-img"><img src="{{ s.img_url }}" loading="lazy" alt="{{ s.title }}"></div>
+        <p class="similar-title">{{ s.title }}</p>
+        <p class="similar-price">{{ s.price }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="reviews-block">
+    <h3 class="block-title">Customer Feedback (<span id="review-count">{{ reviews|length }}</span>)</h3>
+    <div id="reviews-list">
+      {% for r in reviews %}
+      <div class="review">
+        <div class="review-avatar">{{ r.user_name[0]|upper }}</div>
+        <div class="review-body">
+          <div class="review-head"><strong>{{ r.user_name }}</strong>
+            <span class="stars">{{ '★' * r.rating }}{{ '☆' * (5 - r.rating) }}</span></div>
+          <p>{{ r.message }}</p>
+        </div>
+      </div>
+      {% endfor %}
+      {% if reviews|length == 0 %}<p class="muted" id="no-reviews">No feedback yet — be the first to review this product.</p>{% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Booking modal -->
+<div class="modal" id="booking-modal" hidden>
+  <div class="modal-card wide">
+    <button class="modal-close" data-close>×</button>
+    <h3>📅 Book This Dress</h3>
+    <p class="muted">Fill in the details to book your favorite dress.</p>
+    <div class="booking-grid">
+      <div>
+        <p class="sub-label">1. Select Booking Date</p>
+        <input type="date" id="booking-date" class="date-input" />
+        <p class="sub-label">2. Select Duration</p>
+        <div class="duration-opts" id="duration-opts">
+          {% for d in ['1 Day','2 Days','3 Days','5 Days','7 Days'] %}
+          <button type="button" class="dur {% if loop.first %}active{% endif %}">{{ d }}</button>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="booking-summary">
+        <p class="sub-label">Booking Summary</p>
+        <p class="bs-title">{{ product.title }}</p>
+        <p class="bs-brand">by {{ product.brand }}</p>
+        <p class="bs-price">{{ product.price }}</p>
+        <div class="form-error" id="booking-error"></div>
+        <button class="btn-primary full" id="confirm-booking">📅 Confirm Booking</button>
+        <p class="muted small">🔒 Your booking is safe and secure with us.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Feedback modal -->
+<div class="modal" id="feedback-modal" hidden>
+  <div class="modal-card">
+    <button class="modal-close" data-close>×</button>
+    <h3>💬 Give Feedback</h3>
+    <p class="muted">We'd love to hear your thoughts and suggestions.</p>
+    <p class="sub-label">1. Rate your experience</p>
+    <div class="star-rate" id="star-rate">
+      {% for i in range(1,6) %}<span class="star" data-v="{{ i }}">☆</span>{% endfor %}
+    </div>
+    <p class="sub-label">2. How was your experience?</p>
+    <div class="exp-opts" id="exp-opts">
+      {% for e in ['Excellent','Good','Average','Poor'] %}<button type="button" class="exp">{{ e }}</button>{% endfor %}
+    </div>
+    <p class="sub-label">3. Your Feedback</p>
+    <textarea id="fb-message" maxlength="500" placeholder="Share your thoughts, suggestions or any issues..."></textarea>
+    <p class="sub-label">4. Would you recommend Smart Style Finder to others?</p>
+    <div class="recommend-opts" id="recommend-opts">
+      <label><input type="radio" name="rec" value="Yes, definitely" checked> Yes, definitely</label>
+      <label><input type="radio" name="rec" value="Maybe"> Maybe</label>
+      <label><input type="radio" name="rec" value="No"> No</label>
+    </div>
+    <div class="form-error" id="feedback-error"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" data-close>Cancel</button>
+      <button class="btn-primary" id="submit-feedback">📨 Submit Feedback</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{{ url_for('static', filename='js/product.js') }}"></script>{% endblock %}

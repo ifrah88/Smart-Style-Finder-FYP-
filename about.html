@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}About Us · Smart Style Finder{% endblock %}
+{% block nav_about %}active{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('home') }}">🏠</a> › <span>About Us</span></div>
+<section class="search-hero">
+  <div class="search-hero-icon">👗</div>
+  <div><h1>About Smart Style Finder</h1>
+  <p>An AI-powered fashion discovery platform that finds products similar to what you love — by image or by words.</p></div>
+</section>
+<div class="feature-row">
+  <div class="feature"><span class="feat-ic">🖼️</span><div><strong>Image &amp; Text Search</strong><p>Upload a photo or describe a style to find matching products.</p></div></div>
+  <div class="feature"><span class="feat-ic">✨</span><div><strong>AI-Powered Matching</strong><p>FashionCLIP understands style, pattern and colour to rank the closest items.</p></div></div>
+  <div class="feature"><span class="feat-ic">🎨</span><div><strong>Colour-Aware</strong><p>Garment-segmentation + colour matching find the right shade, not just the style.</p></div></div>
+  <div class="feature"><span class="feat-ic">📅</span><div><strong>Book &amp; Review</strong><p>Book your favourite pieces and share feedback with the community.</p></div></div>
+</div>
+{% endblock %}

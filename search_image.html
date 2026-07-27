@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Image Search · Smart Style Finder{% endblock %}
+{% block nav_search %}active{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('home') }}">🏠</a> › <a href="{{ url_for('search_text_page') }}">Search</a> › <span>Image Search</span></div>
+
+<section class="search-hero">
+  <div class="search-hero-icon">🖼️</div>
+  <div>
+    <h1>Image Upload Search</h1>
+    <p>Upload a clear image of any dress, shirt, kurti or outfit and find similar styles instantly.</p>
+  </div>
+</section>
+
+<div class="search-layout">
+  <div class="search-main card">
+    <form id="image-form">
+      <label id="drop-zone" class="drop-zone" for="image-input">
+        <input id="image-input" type="file" accept="image/*" hidden />
+        <div id="drop-default">
+          <div class="drop-icon">☁️⤴</div>
+          <p class="drop-head">Drag &amp; drop your image here</p>
+          <p class="muted">or</p>
+          <span class="btn-primary inline">📁 Browse Files</span>
+          <p class="muted small">JPG, PNG, JPEG up to 16MB</p>
+        </div>
+        <img id="preview" alt="preview" hidden />
+      </label>
+      <div class="hint-box">
+        <p class="muted"><span class="accent">✨</span> Our AI will analyze your image and find the top similar fashion products from our collection with details like color, fabric, brand and price.</p>
+        <div class="form-error" id="image-error"></div>
+        <button type="submit" class="btn-primary" id="image-search-btn" disabled>🔍 Find Similar Dresses</button>
+      </div>
+    </form>
+  </div>
+
+  <aside class="search-side card">
+    <h3 class="block-title">Upload Tips</h3>
+    <div class="tip"><span class="tip-ic">💡</span><div><strong>Upload clear images</strong><p>Use high quality images for better matching results.</p></div></div>
+    <div class="tip"><span class="tip-ic">🔆</span><div><strong>Good lighting</strong><p>Well-lit images produce more accurate matches.</p></div></div>
+    <div class="tip"><span class="tip-ic">🎯</span><div><strong>Focus on the outfit</strong><p>Make sure the dress or outfit is clearly visible.</p></div></div>
+    <div class="tip"><span class="tip-ic">🖼️</span><div><strong>Accepted formats</strong><p>JPG, JPEG, PNG (Max size: 16MB)</p></div></div>
+  </aside>
+</div>
+
+<div class="how-it-works">
+  <h2 class="section-title center">How It Works</h2>
+  <div class="steps">
+    <div class="step"><span class="step-ic">⤴</span><strong>1. Upload Image</strong><p>Upload a clear image of the outfit.</p></div>
+    <span class="step-arrow">›</span>
+    <div class="step"><span class="step-ic">🧠</span><strong>2. AI Analysis</strong><p>Our AI analyzes color, pattern, style and design.</p></div>
+    <span class="step-arrow">›</span>
+    <div class="step"><span class="step-ic">🔍</span><strong>3. Find Matches</strong><p>We search our database for similar products.</p></div>
+    <span class="step-arrow">›</span>
+    <div class="step"><span class="step-ic">📋</span><strong>4. Top Results</strong><p>Get matching products instantly.</p></div>
+    <span class="step-arrow">›</span>
+    <div class="step"><span class="step-ic">🏷️</span><strong>5. View Details</strong><p>View product details and book your favorite.</p></div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{{ url_for('static', filename='js/search.js') }}"></script>{% endblock %}

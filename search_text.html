@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Text Search · Smart Style Finder{% endblock %}
+{% block nav_search %}active{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('home') }}">🏠</a> › <a href="{{ url_for('search_text_page') }}">Search</a> › <span>Text Search</span></div>
+
+<section class="search-hero">
+  <div class="search-hero-icon">🔠</div>
+  <div>
+    <h1>Text Search</h1>
+    <p>Search by dress name, color, fabric, brand or style and find matching fashion products instantly.</p>
+  </div>
+</section>
+
+<div class="search-layout">
+  <div class="search-main card">
+    <h3 class="block-title">Search for your favorite style</h3>
+    <form id="text-form" class="home-search">
+      <span class="search-ic">🔍</span>
+      <input id="text-input" type="text" placeholder="e.g. Baby pink embroidered dress" />
+      <button type="submit" class="btn-primary search-go">🔍 Search</button>
+    </form>
+    <p class="sub-label">Popular Searches</p>
+    <div class="chip-wrap">
+      {% for p in popular %}<button class="chip pop-chip">{{ p }}</button>{% endfor %}
+    </div>
+    <div class="hint-box">
+      <div><span class="accent">✨ Not sure what to search?</span>
+      <p class="muted">Try browsing popular searches above or use image search for better results.</p></div>
+      <a href="{{ url_for('search_image_page') }}" class="btn-outline">🖼️ Try Image Search</a>
+    </div>
+  </div>
+
+  <aside class="search-side card">
+    <h3 class="block-title">Search Tips</h3>
+    <div class="tip"><span class="tip-ic">🎨</span><div><strong>Use specific colors</strong><p>e.g. baby pink, black, white</p></div></div>
+    <div class="tip"><span class="tip-ic">🧵</span><div><strong>Add fabric type</strong><p>e.g. lawn, cotton, silk, chiffon</p></div></div>
+    <div class="tip"><span class="tip-ic">🏷️</span><div><strong>Add brand (optional)</strong><p>e.g. Sapphire, Khaadi, Limelight</p></div></div>
+    <div class="tip"><span class="tip-ic">✨</span><div><strong>Use simple words</strong><p>e.g. party wear dress, casual kurti</p></div></div>
+  </aside>
+</div>
+
+<div class="feature-row">
+  <div class="feature"><span class="feat-ic">🔍</span><div><strong>Smart &amp; Fast Search</strong><p>Our AI understands your text and finds the best matches.</p></div></div>
+  <div class="feature"><span class="feat-ic">🎯</span><div><strong>Accurate Results</strong><p>Get the most relevant fashion products instantly.</p></div></div>
+  <div class="feature"><span class="feat-ic">🏷️</span><div><strong>Detailed Information</strong><p>View fabric, brand, color, price and more.</p></div></div>
+  <div class="feature"><span class="feat-ic">📅</span><div><strong>Save &amp; Book</strong><p>Book your favorite dress and share your feedback.</p></div></div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{{ url_for('static', filename='js/search.js') }}"></script>{% endblock %}

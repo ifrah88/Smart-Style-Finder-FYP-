@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Results · Smart Style Finder{% endblock %}
+{% block nav_search %}active{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('home') }}">🏠</a> › <a href="{{ url_for('search_text_page') }}">Search</a> › <span>Results</span></div>
+
+<section class="results-head">
+  <h1>Top Matching Products</h1>
+  <p id="results-sub">Loading your matches…</p>
+</section>
+
+<div class="search-type-bar">
+  <span id="search-type">🖼️ Search Type: —</span>
+  <div class="sort-controls">
+    <span class="sort-label">Sort by price:</span>
+    <button class="sort-btn" id="sort-asc" onclick="applySort('asc')">↑ Low to High</button>
+    <button class="sort-btn" id="sort-desc" onclick="applySort('desc')">↓ High to Low</button>
+    <button class="sort-btn sort-active" id="sort-none" onclick="applySort('none')">Default</button>
+  </div>
+  <button class="btn-outline" onclick="location.href='{{ url_for('search_text_page') }}'">Change Search</button>
+</div>
+
+<div class="results-grid" id="results-grid"></div>
+<p id="results-empty" class="empty-state" hidden>No matches found above the confidence threshold. Try another search.</p>
+
+<div class="feature-row">
+  <div class="feature"><span class="feat-ic">✨</span><div><strong>AI Powered Search</strong><p>Our AI finds visually similar products that match your style.</p></div></div>
+  <div class="feature"><span class="feat-ic">🛡️</span><div><strong>Accurate Results</strong><p>Advanced technology ensures you get the best matches.</p></div></div>
+  <div class="feature"><span class="feat-ic">🏷️</span><div><strong>Detailed Information</strong><p>View complete product details before you decide.</p></div></div>
+  <div class="feature"><span class="feat-ic">📅</span><div><strong>Easy Booking</strong><p>Book your favorite dress in just a few clicks.</p></div></div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{{ url_for('static', filename='js/results.js') }}"></script>{% endblock %}

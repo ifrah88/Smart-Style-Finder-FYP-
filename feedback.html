@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Feedback · Smart Style Finder{% endblock %}
+{% block nav_feedback %}active{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('home') }}">🏠</a> › <span>Feedback</span></div>
+<section class="search-hero">
+  <div class="search-hero-icon">💬</div>
+  <div><h1>We Value Your Feedback</h1>
+  <p>Your feedback helps us improve Smart Style Finder. Find a product you've booked and share your experience from its page.</p></div>
+</section>
+<div class="card center-card">
+  <p class="muted">To leave feedback on a specific dress, open it from your <a href="{{ url_for('bookings_page') }}" class="link">bookings</a> or from any search result and click <strong>Give Feedback</strong>.</p>
+  <a href="{{ url_for('home') }}" class="btn-primary">Browse Styles</a>
+</div>
+{% endblock %}

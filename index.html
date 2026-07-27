@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Style Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">◈</span>
+      <span class="brand-name">Smart Style Finder</span>
+    </div>
+    <nav class="nav-hint">Find your look</nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 class="hero-title">Discover pieces that match your taste</h1>
+      <p class="hero-sub">Describe what you're looking for, or upload a photo — we'll find the closest matches.</p>
+
+      <div class="search-card">
+        <div class="toggle" role="tablist">
+          <button class="toggle-btn active" data-mode="text" role="tab">Describe it</button>
+          <button class="toggle-btn" data-mode="image" role="tab">Upload a photo</button>
+        </div>
+
+        <!-- TEXT MODE -->
+        <form id="text-form" class="panel active">
+          <input id="text-input" type="text" autocomplete="off"
+                 placeholder="e.g. baby pink embroidered shirt" />
+          <button type="submit" class="primary-btn">Search</button>
+        </form>
+        <div class="examples" id="examples">
+          <span>Try:</span>
+          <button class="chip">black printed lawn shirt</button>
+          <button class="chip">blue floral kurti</button>
+          <button class="chip">maroon embroidered dress</button>
+        </div>
+
+        <!-- IMAGE MODE -->
+        <form id="image-form" class="panel">
+          <label id="drop-zone" class="drop-zone" for="image-input">
+            <input id="image-input" type="file" accept="image/*" hidden />
+            <div id="drop-default">
+              <div class="drop-icon">⤓</div>
+              <p><strong>Click to upload</strong> a clothing photo</p>
+              <span class="muted">JPG, PNG · up to 16 MB</span>
+            </div>
+            <img id="preview" alt="preview" hidden />
+          </label>
+          <button type="submit" class="primary-btn" id="image-search-btn" disabled>Find similar</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="results-section" class="results-section" hidden>
+      <h2 id="results-title" class="results-title"></h2>
+      <div id="results" class="results-grid"></div>
+    </section>
+
+    <div id="loader" class="loader" hidden>
+      <div class="spinner"></div>
+      <p id="loader-text">Searching the collection…</p>
+    </div>
+
+    <p id="error" class="error" hidden></p>
+  </main>
+
+  <footer class="site-footer">
+    <p>Smart Style Finder · powered by FashionCLIP + colour matching</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

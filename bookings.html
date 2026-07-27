@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}My Bookings · Smart Style Finder{% endblock %}
+{% block nav_bookings %}active{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('home') }}">🏠</a> › <span>Bookings</span></div>
+<section class="results-head"><h1>My Bookings</h1>
+  <p id="bookings-count-text">{{ bookings|length }} booking{{ '' if bookings|length == 1 else 's' }}</p></section>
+
+{% if bookings %}
+<div class="bookings-list" id="bookings-list">
+  {% for b in bookings %}
+  <div class="booking-row" id="booking-{{ b.id }}">
+    <a href="{{ url_for('product_page', pid=b.product_id) }}" class="booking-thumb">
+      <img src="/pimg/{{ b.product_id }}" alt="{{ b.title }}"></a>
+    <div class="booking-meta">
+      <strong>{{ b.title }}</strong>
+      <span class="muted">{{ b.brand|title }}</span>
+      <span class="booking-tags">📅 {{ b.booking_date or '—' }} · ⏱️ {{ b.duration }}</span>
+      <span class="booking-status booking-status--{{ (b.status or 'Pending')|lower }}">{{ b.status or 'Pending' }}</span>
+    </div>
+    <div class="booking-price">{{ b.price }}</div>
+    <div class="booking-actions">
+      {% if (b.status or 'Pending') == 'Pending' %}
+      <button class="btn-confirm-booking" data-id="{{ b.id }}">Confirm</button>
+      <button class="btn-cancel-booking" data-id="{{ b.id }}">Cancel</button>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state" id="empty-bookings">
+  <p>You have no bookings yet.</p>
+  <a href="{{ url_for('home') }}" class="btn-primary">Start exploring</a>
+</div>
+{% endif %}
+{% endblock %}
+{% block extra_js %}
+<script>
+document.querySelectorAll(".btn-cancel-booking").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    if (!confirm("Cancel this booking?")) return;
+    const id = parseInt(btn.dataset.id);
+    try {
+      const res = await fetch("/api/booking/cancel", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({id})
+      });
+      const data = await res.json();
+      if (data.ok) {
+        document.getElementById("booking-" + btn.dataset.id)?.remove();
+        const badge = document.getElementById("bookings-badge");
+        if (badge) badge.textContent = data.bookings_count;
+        const remaining = document.querySelectorAll(".booking-row").length;
+        const ct = document.getElementById("bookings-count-text");
+        if (ct) ct.textContent = remaining + " booking" + (remaining === 1 ? "" : "s");
+        if (remaining === 0)
+          document.getElementById("bookings-list").innerHTML =
+            "<div class='empty-state'><p>You have no bookings yet.</p><a href='/' class='btn-primary'>Start exploring</a></div>";
+      } else {
+        alert("Could not cancel booking.");
+      }
+    } catch(e) { alert("Error: " + e.message); }
+  });
+});
+
+document.querySelectorAll(".btn-confirm-booking").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    if (!confirm("Confirm this booking?")) return;
+    const id = parseInt(btn.dataset.id);
+    try {
+      const res = await fetch("/api/booking/confirm", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({id})
+      });
+      const data = await res.json();
+      if (data.ok) {
+        const row = document.getElementById("booking-" + btn.dataset.id);
+        if (row) {
+          const st = row.querySelector(".booking-status");
+          if (st) { st.textContent = "Confirmed"; st.className = "booking-status booking-status--confirmed"; }
+          row.querySelector(".booking-actions").innerHTML = "";
+        }
+      } else {
+        alert("Could not confirm booking.");
+      }
+    } catch(e) { alert("Error: " + e.message); }
+  });
+});
+</script>
+{% endblock %}

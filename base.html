@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Smart Style Finder{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="tagline-bar">🌸 Discover fashion that matches your style with AI ✨</div>
+
+  <header class="app-header">
+    <a href="{{ url_for('home') }}" class="brand">
+      <span class="brand-icon">👗</span>
+      <span class="brand-text">SMART STYLE<br><b>FINDER</b></span>
+    </a>
+    <nav class="main-nav">
+      <a href="{{ url_for('home') }}" class="{% block nav_home %}{% endblock %}">Home</a>
+      <a href="{{ url_for('search_text_page') }}" class="{% block nav_search %}{% endblock %}">Search</a>
+      <a href="{{ url_for('bookings_page') }}" class="{% block nav_bookings %}{% endblock %}">Bookings</a>
+      <a href="{{ url_for('feedback_page') }}" class="{% block nav_feedback %}{% endblock %}">Feedback</a>
+      <a href="{{ url_for('about_page') }}" class="{% block nav_about %}{% endblock %}">About Us</a>
+    </nav>
+    <div class="header-right">
+      <a href="{{ url_for('bookings_page') }}" class="bookings-pill">
+        🛍 Bookings <span class="badge" id="bookings-badge">{{ bookings_count }}</span>
+      </a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-btn">👤 Hi, {{ user_name.split(' ')[0] }} ▾</button>
+        <div class="user-dropdown">
+          <a href="{{ url_for('bookings_page') }}">My Bookings</a>
+          <a href="#" id="edit-profile-link">Edit Profile</a>
+          <a href="#" id="logout-link">Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="app-footer">
+    <p>Smart Style Finder · AI-powered fashion discovery · © 2025</p>
+  </footer>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal" id="edit-profile-modal" hidden>
+    <div class="modal-card">
+      <button class="modal-close" id="edit-profile-close">×</button>
+      <h3>Edit Profile</h3>
+      <p class="muted">Update your name or email address.</p>
+      <div class="field"><span class="field-icon">👤</span><input type="text" id="ep-name" placeholder="Full Name" /></div>
+      <div class="field"><span class="field-icon">✉️</span><input type="email" id="ep-email" placeholder="Email address" /></div>
+      <div class="form-error" id="ep-error"></div>
+      <div class="form-success" id="ep-success"></div>
+      <button class="btn-primary full" id="ep-submit">Save Changes</button>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

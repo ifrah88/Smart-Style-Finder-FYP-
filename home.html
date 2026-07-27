@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Home · Smart Style Finder{% endblock %}
+{% block nav_home %}active{% endblock %}
+{% block content %}
+<section class="hero-banner">
+  <div class="hero-text">
+    <h1>Find Your Perfect<br>Dress with <span class="accent">AI</span></h1>
+    <p>Discover fashion products similar to what you love — search by words or by uploading a photo.</p>
+  </div>
+  <div class="hero-img">
+    <img src="{{ url_for('static', filename='img/hero-banner.jpg') }}" alt="Fashion collection" />
+  </div>
+</section>
+
+<section class="search-panel">
+  <form id="home-text-form" class="home-search">
+    <span class="search-ic">🔍</span>
+    <input id="home-text-input" type="text" placeholder="Search for dresses, styles, colors..." />
+    <button type="submit" class="btn-primary search-go">🔍</button>
+  </form>
+  <a href="{{ url_for('search_image_page') }}" class="btn-outline image-search-btn">🖼️ Image Search</a>
+  <a href="#trending" class="btn-outline trending-link">↗ View Trending Styles</a>
+</section>
+
+<section class="popular-row">
+  <span class="popular-label">Popular Searches:</span>
+  {% for p in popular[:4] %}<button class="chip pop-chip">{{ p }}</button>{% endfor %}
+</section>
+
+<div class="secure-banner">
+  <span class="secure-icon">🛡️</span>
+  <div><strong>Your data is safe and secure with us.</strong>
+  <p>We use industry-standard security to protect your personal information.</p></div>
+</div>
+
+<section class="trending" id="trending">
+  <div class="trending-header">
+    <h2 class="section-title">Trending Styles</h2>
+    <a href="{{ url_for('search_text_page') }}" class="view-all-link">View All →</a>
+  </div>
+  <div class="results-grid" id="trending-grid"></div>
+  <div class="pager" id="trending-pager"></div>
+</section>
+{% endblock %}
+{% block extra_js %}<script src="{{ url_for('static', filename='js/home.js') }}"></script>{% endblock %}
